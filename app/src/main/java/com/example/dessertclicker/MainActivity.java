@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -54,8 +55,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+        revenue = savedInstanceState.getInt("revenue");
+        dessertsSold = savedInstanceState.getInt("dessertsSold");
+        }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
+        Log.d("Code", "onCreate()");
         binding.dessertButton.setOnClickListener((v) -> {
             onDessertClicked();
         });
@@ -63,8 +68,51 @@ public class MainActivity extends AppCompatActivity {
         binding.setAmountSold(dessertsSold);
 
         binding.dessertButton.setImageResource(currentDessert.imageId);
+
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("Code","onStart()");
+
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Code","onRestart()");
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Code","onResume");
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("Code","onStop");
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("revenue",revenue);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Code","onPause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Code","onDestroy");
+    }
     private void onDessertClicked() {
         revenue += currentDessert.price;
         dessertsSold += 1;
